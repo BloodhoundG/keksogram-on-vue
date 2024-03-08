@@ -15,7 +15,6 @@ const closeModal = () => {
 
 const onEscClose = (evt) => {
   if (evt.key === "Escape") {
-    console.log("Отработал Esc");
     closeModal();
   }
 };
