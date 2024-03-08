@@ -9,13 +9,11 @@ const selectedPost = ref(null);
 
 const showModalBigPicture = (post) => {
   hidden.value = true;
-  document.body.classList.add("modal-open");
   selectedPost.value = post;
 };
 
 const closeModalBigPicture = () => {
   hidden.value = false;
-  document.body.classList.remove("modal-open");
 };
 </script>
 
@@ -281,11 +279,9 @@ const closeModalBigPicture = () => {
   <!-- Полноэкранный показ изображения -->
 
   <ModalBigPicture
-    v-if="selectedPost"
-    v-show="hidden"
+    v-if="hidden"
     :alt="selectedPost.description"
     :comments="selectedPost.comments"
-    :description="selectedPost.description"
     :likes="selectedPost.likes"
     :url="selectedPost.url"
     @closeModalBigPicture="closeModalBigPicture"

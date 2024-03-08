@@ -1,15 +1,33 @@
 <script setup>
-const emits = defineEmits(["closeModalBigPicture"]);
-const closeModal = () => {
-  emits("closeModalBigPicture");
-};
+import { onMounted, onUnmounted } from "vue";
 
 const props = defineProps({
   alt: String,
   comments: Array,
   likes: Number,
   url: String,
-  description: String,
+});
+
+const emits = defineEmits(["closeModalBigPicture"]);
+const closeModal = () => {
+  emits("closeModalBigPicture");
+};
+
+const onEscClose = (evt) => {
+  if (evt.key === "Escape") {
+    console.log("Отработал Esc");
+    closeModal();
+  }
+};
+
+onMounted(() => {
+  document.body.classList.add("modal-open");
+  document.addEventListener("keydown", onEscClose);
+});
+
+onUnmounted(() => {
+  document.body.classList.remove("modal-open");
+  document.removeEventListener("keydown", onEscClose);
 });
 </script>
 
@@ -19,20 +37,20 @@ const props = defineProps({
     <div class="big-picture__preview">
       <!-- Просмотр изображения -->
       <div class="big-picture__img">
-        <img :alt="alt" :src="url" height="600" width="600"/>
+        <img :alt="alt" :src="url" height="600" width="600" />
       </div>
 
       <!-- Информация об изображении. Подпись, комментарии, количество лайков -->
       <div class="big-picture__social social">
         <div class="social__header">
           <img
-              alt="Аватар автора фотографии"
-              class="social__picture"
-              height="35"
-              src="/img/avatar-1.svg"
-              width="35"
+            alt="Аватар автора фотографии"
+            class="social__picture"
+            height="35"
+            src="/img/avatar-1.svg"
+            width="35"
           />
-          <p class="social__caption">{{ description }}</p>
+          <p class="social__caption">{{ alt }}</p>
           <p class="social__likes">
             Нравится <span class="likes-count">{{ likes }}</span>
           </p>
@@ -46,11 +64,11 @@ const props = defineProps({
         <ul class="social__comments">
           <li class="social__comment">
             <img
-                alt="Аватар комментатора фотографии"
-                class="social__picture"
-                height="35"
-                src="/img/avatar-4.svg"
-                width="35"
+              alt="Аватар комментатора фотографии"
+              class="social__picture"
+              height="35"
+              src="/img/avatar-4.svg"
+              width="35"
             />
             <p class="social__text">
               Мега фото! Просто обалдеть. Как вам так удалось?
@@ -58,11 +76,11 @@ const props = defineProps({
           </li>
           <li class="social__comment">
             <img
-                alt="Аватар комментатора фотографии"
-                class="social__picture"
-                height="35"
-                src="/img/avatar-3.svg"
-                width="35"
+              alt="Аватар комментатора фотографии"
+              class="social__picture"
+              height="35"
+              src="/img/avatar-3.svg"
+              width="35"
             />
             <p class="social__text">Да это фоташоп!!!!!!!!</p>
           </li>
@@ -76,16 +94,16 @@ const props = defineProps({
         <!-- Форма для отправки комментария -->
         <div class="social__footer">
           <img
-              alt="Аватар комментатора фотографии"
-              class="social__picture"
-              height="35"
-              src="/img/avatar-6.svg"
-              width="35"
+            alt="Аватар комментатора фотографии"
+            class="social__picture"
+            height="35"
+            src="/img/avatar-6.svg"
+            width="35"
           />
           <input
-              class="social__footer-text"
-              placeholder="Ваш комментарий..."
-              type="text"
+            class="social__footer-text"
+            placeholder="Ваш комментарий..."
+            type="text"
           />
           <button class="social__footer-btn" name="button" type="button">
             Отправить
@@ -95,10 +113,10 @@ const props = defineProps({
 
       <!-- Кнопка для выхода из полноэкранного просмотра изображения -->
       <button
-          id="picture-cancel"
-          class="big-picture__cancel cancel"
-          type="reset"
-          @click="closeModal"
+        id="picture-cancel"
+        class="big-picture__cancel cancel"
+        type="reset"
+        @click="closeModal"
       >
         Закрыть
       </button>
